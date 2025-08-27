@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Header from '../../components/common/Header/Header'
-import Navbar from "../../components/common/Navbar/Navbar";
+
 import Footer from "../../components/common/Footer/Footer";
 import Searchbar from "../../components/common/Searchbar/Searchbar"
 import styles from "../../pages/Home/Home.module.scss";
@@ -8,7 +8,7 @@ import { getAll as getAllCategories  } from "../../utils/categories-api";
 import { getAll as getAllItems } from "../../utils/items-api"
 import { useNavigate } from "react-router-dom";
 
-export default function Homepage() {
+export default function Homepage({setUser}) {
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
@@ -59,8 +59,7 @@ export default function Homepage() {
 
   return (
     <>
-    <Header />
-      <Navbar />
+    <Header setUser={setUser} />
       <Searchbar />
       <main className={styles.mainContent}>
         {/* Categories Section */}

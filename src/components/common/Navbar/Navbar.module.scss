@@ -4,56 +4,57 @@ $text-main: #353B32;
 $accent: #7B9E89;
 
 .navbar {
-  background: $bg-main;
-  border-bottom: 2px solid $bg-alt;
-  padding: 0.75rem 2rem;
-
-  .navbar-container {
+  display: flex;
+  align-items: center;
+  
+  .navbarContainer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
   }
 
-  .navbar-menu {
+  .navbarMenu {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
     list-style: none;
     margin: 0;
     padding: 0;
-  }
-
-  .navbar-item {
-    display: flex;
     align-items: center;
   }
 
-  .navbar-link {
+  .navbarLink {
     text-decoration: none;
     color: $text-main;
     font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
     transition: color 0.3s ease;
+    font-family: inherit; // Ensure button uses same font as links
 
     &:hover {
       color: $accent;
     }
+
+    // Make button look exactly like other links
+    &:focus {
+      outline: none;
+    }
   }
 
-  .navbar-home-image {
-    height: 30px;
-    width: auto;
-  }
-
-  .navbar-profile {
+  .navbarProfile {
     display: flex;
     align-items: center;
-  }
+    margin-left: 1rem;
 
-  .navbar-profile-image {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    border: 2px solid $accent;
-    object-fit: cover;
-    cursor: pointer;
+    .navbarProfileImage {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      border: 2px solid $accent;
+      object-fit: cover;
+      cursor: pointer;
+    }
   }
 }
