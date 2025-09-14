@@ -26,6 +26,7 @@
       border: 1px solid color.adjust(#242C24, $lightness: 50%);
       border-radius: 0.5rem;
       font-size: 1rem;
+
       outline: none;
       color: #242C24;
       transition: border-color 0.2s ease;
@@ -38,7 +39,7 @@
     button {
       margin-top: 1rem;
       padding: 0.75rem;
-      background: #12784F;
+      background: #242C24;
       color: #C2D0C5;
       font-weight: 600;
       font-size: 1rem;

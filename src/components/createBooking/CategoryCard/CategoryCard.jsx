@@ -13,14 +13,15 @@ export default function CategoryCard({ item: category, isSelected, onSelect }) {
     >
       <div className={styles.categoryImageWrapper}>
         {category.image ? (
-          <img
-            src={category.image}
-            alt={category.name}
-            className={styles.categoryImage}
-          />
+          // <img
+          //   src={category.image}
+          //   alt={category.name}
+          //   className={styles.categoryImage}
+          // />
+          <p></p>
         ) : (
           <div className={styles.imagePlaceholder}>
-            <span className={styles.placeholderText}>:file_folder:</span>
+            <span className={styles.placeholderText}></span>
           </div>
         )}
       </div>

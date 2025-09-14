@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
-import * as usersService from '../../../utils/users-service';
 import style from "../Login/Login.module.scss";
+import * as usersService from '../../../utils/users-service'
 export default function LoginForm({ setUser }) {
   const [credentials, setCredentials] = useState({
     email: '',
@@ -27,7 +27,7 @@ export default function LoginForm({ setUser }) {
   }
   return (
     <div>
-      <div className={style.LoginForm}>
+      <div className="form-container">
         <form autoComplete="off" onSubmit={handleSubmit}>
           <label>Email</label>
           <input type="text" name="email" value={credentials.email} onChange={handleChange} required />

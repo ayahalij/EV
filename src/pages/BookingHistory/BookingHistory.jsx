@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Header from '../../components/common/Header/Header';
-import Navbar from '../../components/common/Navbar/Navbar';
 import Footer from '../../components/common/Footer/Footer';
 import BookingDetail from '../../components/bookingHistory/BookingDetail/BookingDetail';
 import styles from './BookingHistory.module.scss';
+
 const BookingHistory = ({ setUser }) => {
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -13,9 +13,11 @@ const BookingHistory = ({ setUser }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const bookingId = searchParams.get('bookingId');
+
   useEffect(() => {
     fetchBookingHistory();
   }, []);
+
   useEffect(() => {
     if (bookingId && bookings.length > 0) {
       const booking = bookings.find(b => b._id === bookingId);
@@ -26,6 +28,7 @@ const BookingHistory = ({ setUser }) => {
       setSelectedBooking(bookings[0]);
     }
   }, [bookingId, bookings]);
+
   const fetchBookingHistory = async () => {
     try {
       setLoading(true);
@@ -35,21 +38,23 @@ const BookingHistory = ({ setUser }) => {
         setLoading(false);
         return;
       }
+
       const response = await fetch('/api/bookings/history', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+
       if (!response.ok) {
         if (response.status === 401) {
           setError('Session expired. Please log in again.');
-          // Redirect to login
           navigate('/auth');
           return;
         }
         throw new Error(`Failed to fetch bookings: ${response.status}`);
       }
+
       const data = await response.json();
       setBookings(data || []);
       if (data.length > 0 && !selectedBooking) {
@@ -62,6 +67,7 @@ const BookingHistory = ({ setUser }) => {
       setLoading(false);
     }
   };
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -71,6 +77,7 @@ const BookingHistory = ({ setUser }) => {
       minute: '2-digit'
     });
   };
+
   const getStatusClass = (status) => {
     switch (status) {
       case 'completed': return styles.statusCompleted;
@@ -80,17 +87,22 @@ const BookingHistory = ({ setUser }) => {
       default: return styles.statusDefault;
     }
   };
+
   const handleBookingSelect = (booking) => {
     setSelectedBooking(booking);
-    navigate(`/booking-history?bookingId=${booking._id}`);
+    // Fixed: Use the correct route path
+    navigate(`/bookings/history?bookingId=${booking._id}`);
   };
+
   const handleCreateNewBooking = () => {
-    navigate('/create-booking');
+    navigate('/bookings/new'); // Fixed: Use correct route
   };
+
   const handleReorder = (booking) => {
     // Add all items from the booking back to cart
     const existingCart = localStorage.getItem('eventCart');
     let cart = existingCart ? JSON.parse(existingCart) : [];
+    
     booking.items.forEach(bookingItem => {
       const existingCartItem = cart.find(ci => ci._id === bookingItem.item._id);
       if (existingCartItem) {
@@ -107,14 +119,15 @@ const BookingHistory = ({ setUser }) => {
         });
       }
     });
+    
     localStorage.setItem('eventCart', JSON.stringify(cart));
-    navigate('/create-booking');
+    navigate('/bookings/new'); // Fixed: Use correct route
   };
+
   if (loading) {
     return (
       <>
-        <Header />
-        <Navbar setUser={setUser} />
+        <Header setUser={setUser} />
         <div className={styles.container}>
           <div className={styles.loading}>Loading booking history...</div>
         </div>
@@ -122,11 +135,12 @@ const BookingHistory = ({ setUser }) => {
       </>
     );
   }
+
   if (error) {
     return (
       <>
-        <Header />
-        <Navbar setUser={setUser} />
+        <Header setUser={setUser} />
+
         <div className={styles.container}>
           <div className={styles.error}>
             <h2>Unable to Load History</h2>
@@ -151,10 +165,11 @@ const BookingHistory = ({ setUser }) => {
       </>
     );
   }
+
   return (
     <>
-      <Header />
-      <Navbar setUser={setUser} />
+      <Header setUser={setUser} />
+
       <div className={styles.container}>
         <h1 className={styles.title}>Booking History</h1>
         <div className={styles.content}>
@@ -237,4 +252,5 @@ const BookingHistory = ({ setUser }) => {
     </>
   );
 };
+
 export default BookingHistory;
